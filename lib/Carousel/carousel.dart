@@ -13,6 +13,7 @@ class CarouselView<T> extends StatefulWidget {
     required this.itemBuilder,
     required this.carouselTransitionStyle,
     required this.curve,
+    required this.initialIndex,
     this.dotOption,
     this.onPageChanged,
   });
@@ -28,11 +29,13 @@ class CarouselView<T> extends StatefulWidget {
     this.physics = const BouncingScrollPhysics(),
     this.curve = Curves.easeInOutCubic,
     this.dotOption,
+    this.initialIndex = 0,
     required this.itemBuilder,
     required this.carouselTransitionStyle,
   }) : super(key: key);
 
   int itemCount;
+  int initialIndex;
   double height;
   double width;
   double viewportFraction;
@@ -49,11 +52,9 @@ class CarouselView<T> extends StatefulWidget {
 }
 
 class _CarouselViewState<T> extends State<CarouselView> {
-  late final PageController _pageController = PageController(viewportFraction: widget.viewportFraction);
+  late final PageController _pageController;
+  late ValueNotifier<int> _currentSelectedPage;
   double _currentPageValue = 0;
-
-  // int _currentSelectedPage = 0;
-  ValueNotifier<int> _currentSelectedPage = ValueNotifier(0);
 
   /// setSate => get called and update [_currentPageValue] position of page scroll
   /// every time the page was scrolled by pixel by user
@@ -76,7 +77,8 @@ class _CarouselViewState<T> extends State<CarouselView> {
   @override
   void initState() {
     super.initState();
-    widget.carouselTransitionStyle.setItemBuilder(widget.itemBuilder);
+    _currentSelectedPage = ValueNotifier(widget.initialIndex);
+    _pageController = PageController(viewportFraction: widget.viewportFraction, initialPage: widget.initialIndex);
     _pageController.addListener(() {
       setState(() {
         _currentPageValue = _pageController.page ?? 0;
@@ -85,6 +87,7 @@ class _CarouselViewState<T> extends State<CarouselView> {
       });
     });
   }
+
 
   @override
   void dispose() {
@@ -95,6 +98,7 @@ class _CarouselViewState<T> extends State<CarouselView> {
 
   @override
   Widget build(BuildContext context) {
+    widget.carouselTransitionStyle.setItemBuilder(widget.itemBuilder);
     List<Widget> col = [
       SizedBox(
           width: widget.width,
