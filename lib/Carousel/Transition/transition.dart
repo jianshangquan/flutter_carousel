@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 
 
 abstract class CarouselTransitionStyle{
-  late List<Widget> items;
+  late IndexedWidgetBuilder widgetBuilder;
   CarouselTransitionStyle();
-  setItems(List<Widget> items){
-    this.items = items;
+  setItemBuilder(IndexedWidgetBuilder widgetBuilder){
+    this.widgetBuilder = widgetBuilder;
   }
   Widget build(BuildContext context, int index, double transitingValue);
 }

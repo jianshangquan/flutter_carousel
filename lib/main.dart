@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'Carousel/Transition/card_transition.dart';
 import 'Carousel/Transition/rotate_transition.dart';
 import 'Carousel/carousel.dart';
+import 'Carousel/dot_option.dart';
 
 void main() {
   List<Widget> items = [
@@ -53,14 +54,23 @@ void main() {
           body: Container(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: CarouselView(
-              items: items,
               itemCount: items.length,
               height: 200,
               viewportFraction: 0.7,
+              carouselTransitionStyle: CardTransition(),
+              dotOption: DotOption(
+
+              ),
+              itemBuilder: (context, index){
+                return Container(
+                  decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(20)),
+                  alignment: Alignment.center,
+                  child: Text("$index", style: TextStyle(fontSize: 50)),
+                );
+              },
               onPageChanged: (index) {
                 print('page changed $index');
               },
-              carouselTransitionStyle: CardTransition(),
             ),
           )),
     ),

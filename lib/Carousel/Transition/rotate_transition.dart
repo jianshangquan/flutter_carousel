@@ -54,7 +54,7 @@ class RotateCardTransition extends CarouselTransitionStyle {
     return Transform.rotate(
       angle: rotateDeg,
       origin: offset,
-      child: items[index],
+      child: widgetBuilder(context,index),
     );
   }
 }

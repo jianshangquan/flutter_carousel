@@ -26,7 +26,7 @@ class CardTransition extends CarouselTransitionStyle{
     // print("index $index, dx: $dx, scale: $scale");
     return Transform.scale(
         scale: scale,
-        child: items[index]
+        child: widgetBuilder(context, index)
     );
   }
 
