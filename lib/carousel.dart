@@ -7,6 +7,8 @@ class CarouselView extends StatefulWidget {
     this.height = double.infinity,
     this.width = double.infinity,
     this.viewportFraction = 1,
+    this.maxScale = 1,
+    this.minScale = 0.9,
   }) : super(key: key);
 
   CarouselView.builder({
@@ -15,11 +17,15 @@ class CarouselView extends StatefulWidget {
     this.height = double.infinity,
     this.width = double.infinity,
     this.viewportFraction = 1,
+    this.maxScale = 1,
+    this.minScale = 0.9,
   }) : super(key: key);
 
   int? itemCount;
   double height;
   double width;
+  double maxScale;
+  double minScale;
   double viewportFraction;
   List<Widget>? items;
 
@@ -62,19 +68,17 @@ class _CarouselViewState extends State<CarouselView> {
               itemCount: widget.items?.length ?? 0,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index){
-                double scale = 0;
-                if(index == currentPageValue.floor()){ // pre
-                  print('floor');
-                  scale = 0.9 * (1 - (currentPageValue - index));
-                }else if(index == currentPageValue.floor() + 1){ // current
-                  print('floor + 1');
-                  scale = 0.8 * (index - currentPageValue);
-                }else{ // next
-                  print("else");
-                  scale = 0.8;
+                double scale = widget.maxScale;
+                double dx = index - currentPageValue;
+                if(dx > 0){
+                  scale =  (1 - (dx.abs() * widget.maxScale)) * widget.maxScale;
+                }else if(dx < 0){
+                  scale =  (1 - (dx.abs() * widget.maxScale)) * widget.maxScale;
+                }else{
+                  scale = widget.maxScale;
                 }
-                print("build $index, scale: $scale");
-                print("-----------------");
+                if(scale <= widget.minScale) scale = widget.minScale;
+                print("index $index, dx: $dx, scale: $scale");
                 return Transform.scale(
                     scale: scale,
                     child: widget.items![index]
