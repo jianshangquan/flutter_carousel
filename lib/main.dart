@@ -1,9 +1,69 @@
 import 'package:flutter/material.dart';
 
-import 'carousel.dart';
+import 'Carousel/Transition/card_transition.dart';
+import 'Carousel/carousel.dart';
 
 void main() {
 
+
+  List<Widget> items = [
+    Container(
+      decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(20)
+      ),
+      alignment: Alignment.center,
+      child: const Text("0", style: TextStyle(fontSize: 50)),
+    ),
+    Container(
+      decoration: BoxDecoration(
+          color: Colors.green,
+          borderRadius: BorderRadius.circular(20)
+      ),
+      alignment: Alignment.center,
+      child: const Text("1", style: TextStyle(fontSize: 50)),
+    ),
+    Container(
+      decoration: BoxDecoration(
+          color: Colors.blue,
+          borderRadius: BorderRadius.circular(20)
+      ),
+      alignment: Alignment.center,
+      child: const Text("2", style: TextStyle(fontSize: 50)),
+    ),
+    Container(
+      decoration: BoxDecoration(
+          color: Colors.amber,
+          borderRadius: BorderRadius.circular(20)
+      ),
+      alignment: Alignment.center,
+      child: const Text("3", style: TextStyle(fontSize: 50)),
+    ),
+    Container(
+      decoration: BoxDecoration(
+          color: Colors.teal,
+          borderRadius: BorderRadius.circular(20)
+      ),
+      alignment: Alignment.center,
+      child: const Text("4", style: TextStyle(fontSize: 50)),
+    ),
+    Container(
+      decoration: BoxDecoration(
+          color: Colors.cyan,
+          borderRadius: BorderRadius.circular(20)
+      ),
+      alignment: Alignment.center,
+      child: const Text("5", style: TextStyle(fontSize: 50)),
+    ),
+    Container(
+      decoration: BoxDecoration(
+          color: Colors.limeAccent,
+          borderRadius: BorderRadius.circular(20)
+      ),
+      alignment: Alignment.center,
+      child: const Text("6", style: TextStyle(fontSize: 50)),
+    )
+  ];
 
   runApp(
     MaterialApp(
@@ -13,68 +73,19 @@ void main() {
           title: const Text("Carousel"),
         ),
         body: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child: CarouselView(
+            itemCount: items.length,
             height: 200,
             viewportFraction: 0.8,
-            items: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(20)
-                ),
-                alignment: Alignment.center,
-                child: const Text("0", style: TextStyle(fontSize: 50)),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(20)
-                ),
-                alignment: Alignment.center,
-                child: const Text("1", style: TextStyle(fontSize: 50)),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(20)
-                ),
-                alignment: Alignment.center,
-                child: const Text("2", style: TextStyle(fontSize: 50)),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(20)
-                ),
-                alignment: Alignment.center,
-                child: const Text("3", style: TextStyle(fontSize: 50)),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.teal,
-                    borderRadius: BorderRadius.circular(20)
-                ),
-                alignment: Alignment.center,
-                child: const Text("4", style: TextStyle(fontSize: 50)),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.cyan,
-                    borderRadius: BorderRadius.circular(20)
-                ),
-                alignment: Alignment.center,
-                child: const Text("5", style: TextStyle(fontSize: 50)),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.limeAccent,
-                    borderRadius: BorderRadius.circular(20)
-                ),
-                alignment: Alignment.center,
-                child: const Text("6", style: TextStyle(fontSize: 50)),
-              )
-            ],
+            onPageChanged: (index){
+              print('page changed $index');
+            },
+            carouselTransitionStyle: CardTransition(
+              maxScale: 1,
+              minScale: 0.9,
+              items: items
+            )
           ),
         )
       ),
