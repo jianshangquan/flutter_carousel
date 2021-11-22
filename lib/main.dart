@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'Carousel/Transition/card_transition.dart';
 import 'Carousel/Transition/rotate_transition.dart';
 import 'Carousel/carousel.dart';
-import 'Carousel/dot_option.dart';
+import 'Carousel/Dot/dot_option.dart';
 
 void main() {
   List<Widget> items = [

@@ -12,7 +12,7 @@ class CardTransition extends CarouselTransitionStyle{
   double minScale;
 
   @override
-  Widget build(context, index, transitingValue) {
+  Widget buildWidgetOnTranforming(context, index, transitingValue) {
     double scale = maxScale;
     double dx = index - transitingValue;
     if(dx > 0){

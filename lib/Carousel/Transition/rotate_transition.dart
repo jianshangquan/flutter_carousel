@@ -30,7 +30,7 @@ class RotateCardTransition extends CarouselTransitionStyle {
   /// origin: const Offset(-200, 200),
 
   @override
-  Widget build(BuildContext context, int index, double transitingValue) {
+  Widget buildWidgetOnTranforming(BuildContext context, int index, double transitingValue) {
     double rotateDeg = 0;
     double dx = index - transitingValue;
     late Offset offset;
@@ -49,7 +49,7 @@ class RotateCardTransition extends CarouselTransitionStyle {
       );
     } else {
       rotateDeg = 0;
-      offset = Offset(0,0);
+      offset = const Offset(0,0);
     }
     return Transform.rotate(
       angle: rotateDeg,

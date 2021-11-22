@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel/Carousel/Transition/transition.dart';
-import 'package:flutter_carousel/Carousel/dot_option.dart';
+import 'Dot/dot.dart';
+import 'package:flutter_carousel/Carousel/Dot/dot_option.dart';
 
 class CarouselView<T> extends StatefulWidget {
   CarouselView._({
@@ -68,7 +69,7 @@ class _CarouselViewState<T> extends State<CarouselView> {
   /// by providing [index] [_currentPageValue] of each pixel scroll by user
   ///
   ///
-  /// [carouselTransitionStyle.build] function define how the widget
+  /// [carouselTransitionStyle.buildWidgetOnTranforming] function define how the widget
   /// item should be
   ///
 
@@ -89,6 +90,7 @@ class _CarouselViewState<T> extends State<CarouselView> {
   void dispose() {
     super.dispose();
     _pageController.dispose();
+    _currentSelectedPage.dispose();
   }
 
   @override
@@ -106,12 +108,25 @@ class _CarouselViewState<T> extends State<CarouselView> {
             },
             physics: widget.physics,
             itemBuilder: (context, index) {
-              return widget.carouselTransitionStyle.build(context, index, _currentPageValue);
+              return widget.carouselTransitionStyle.buildWidgetOnTranforming(context, index, _currentPageValue);
             },
           )),
     ];
 
     if (widget.dotOption != null) {
+      List<Dot> dots = [];
+      for(var i = 0; i < widget.itemCount; i++){
+        dots.add(Dot(
+          index: i,
+          dotOption: widget.dotOption!,
+          isSelected: (_currentSelectedPage.value == i),
+          onTap: (){
+            _currentSelectedPage.value = i;
+            _pageController.animateToPage(i, duration: widget.dotOption!.duration, curve: widget.curve);
+          },
+        ));
+      }
+
       col.addAll([
         const SizedBox(height: 10),
         SizedBox(
@@ -121,15 +136,7 @@ class _CarouselViewState<T> extends State<CarouselView> {
             builder: (context, index, child){
               return Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
-                  dotBuilder(0),
-                  dotBuilder(1),
-                  dotBuilder(2),
-                  dotBuilder(3),
-                  dotBuilder(4),
-                  dotBuilder(5),
-                  dotBuilder(6),
-                ],
+                children: dots,
               );
             },
           ),
@@ -138,25 +145,5 @@ class _CarouselViewState<T> extends State<CarouselView> {
     }
 
     return Column(children: col);
-  }
-
-  Widget dotBuilder(int index) {
-    return GestureDetector(
-      onTap: () {
-        _currentSelectedPage.value = index;
-        _pageController.animateToPage(index, duration: const Duration(milliseconds: 250), curve: widget.curve);
-      },
-      child: AnimatedContainer(
-        curve: widget.curve,
-        width: (index == _currentSelectedPage.value) ? widget.dotOption!.dotSize : widget.dotOption!.dotSize * 0.6,
-        height: (index == _currentSelectedPage.value) ? widget.dotOption!.dotSize : widget.dotOption!.dotSize * 0.6,
-        duration: const Duration(milliseconds: 250),
-        margin: const EdgeInsets.all(2.5),
-        decoration: BoxDecoration(
-          color: (index == _currentSelectedPage.value) ? widget.dotOption!.selectedDotColor : widget.dotOption!.unselectedDotColor,
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-    );
   }
 }

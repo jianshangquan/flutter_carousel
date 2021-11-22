@@ -4,7 +4,7 @@ import 'package:flutter_carousel/Carousel/Transition/transition.dart';
 class ThreeDCardTransition extends CarouselTransitionStyle{
 
   @override
-  Widget build(BuildContext context, int index, double transitingValue) {
+  Widget buildWidgetOnTranforming(BuildContext context, int index, double transitingValue) {
     return Container();
   }
 }
