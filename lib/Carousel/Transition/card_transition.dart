@@ -4,10 +4,9 @@ import 'package:flutter_carousel/Carousel/Transition/transition.dart';
 
 class CardTransition extends CarouselTransitionStyle{
   CardTransition({
-    required List<Widget> items,
-    required this.minScale,
-    required this.maxScale
-  }):super(items: items);
+    this.minScale = 0.9,
+    this.maxScale = 1
+  });
 
   double maxScale;
   double minScale;

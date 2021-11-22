@@ -10,6 +10,8 @@ class CarouselView<T> extends StatefulWidget {
     required this.pageSnapping,
     required this.viewportFraction,
     required this.showDots,
+    required this.items,
+    required this.carouselTransitionStyle,
     this.onPageChanged,
   });
 
@@ -23,6 +25,7 @@ class CarouselView<T> extends StatefulWidget {
     this.onPageChanged,
     this.physics = const BouncingScrollPhysics(),
     this.showDots = true,
+    required this.items,
     required this.carouselTransitionStyle,
   }) : super(key: key);
 
@@ -32,8 +35,9 @@ class CarouselView<T> extends StatefulWidget {
   double viewportFraction;
   bool pageSnapping;
   bool showDots;
+  List<Widget> items;
   ValueChanged<T>? onPageChanged;
-  CarouselTransitionStyle? carouselTransitionStyle;
+  CarouselTransitionStyle carouselTransitionStyle;
   ScrollPhysics? physics;
 
   @override
@@ -48,6 +52,7 @@ class _CarouselViewState<T> extends State<CarouselView> {
   @override
   void initState() {
     super.initState();
+    widget.carouselTransitionStyle.setItems(widget.items);
     _pageController.addListener(() {
       setState(() {
         currentPageValue = _pageController.page ?? 0;
@@ -76,7 +81,7 @@ class _CarouselViewState<T> extends State<CarouselView> {
               onPageChanged: widget.onPageChanged,
               physics: widget.physics,
               itemBuilder: (context, index){
-                return widget.carouselTransitionStyle!.build(context, index, currentPageValue);
+                return widget.carouselTransitionStyle.build(context, index, currentPageValue);
               },
             )
         ),
