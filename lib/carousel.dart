@@ -6,6 +6,7 @@ class CarouselView extends StatefulWidget {
     required this.items,
     this.height = double.infinity,
     this.width = double.infinity,
+    this.viewportFraction = 1,
   }) : super(key: key);
 
   CarouselView.builder({
@@ -13,11 +14,13 @@ class CarouselView extends StatefulWidget {
     required this.itemCount,
     this.height = double.infinity,
     this.width = double.infinity,
+    this.viewportFraction = 1,
   }) : super(key: key);
 
   int? itemCount;
   double height;
   double width;
+  double viewportFraction;
   List<Widget>? items;
 
   @override
@@ -26,7 +29,7 @@ class CarouselView extends StatefulWidget {
 
 class _CarouselViewState extends State<CarouselView> {
 
-  PageController _pageController = PageController();
+  late final PageController _pageController = PageController(viewportFraction: widget.viewportFraction);
   double currentPageValue = 0;
 
   @override
@@ -35,6 +38,7 @@ class _CarouselViewState extends State<CarouselView> {
     _pageController.addListener(() {
       setState(() {
         currentPageValue = _pageController.page ?? 0;
+        print("");
         print("page is scrolling ${currentPageValue}");
       });
     });
@@ -58,26 +62,23 @@ class _CarouselViewState extends State<CarouselView> {
               itemCount: widget.items?.length ?? 0,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index){
-                print('builder index $index, floor: ${currentPageValue.floor()} pagevalue: ${currentPageValue.toStringAsFixed(2)}, diff:(i-page)  ${(index - currentPageValue).toStringAsFixed(2)}, diff:(page-i)  ${(currentPageValue - index).toStringAsFixed(2)}');
-                if (index == currentPageValue.floor()) {
-                  print("floor");
-                  return Transform.scale(
-                      scale: (1 - (currentPageValue - index)) * 0.8,
-                      child: widget.items![index]
-                  );
-                } else if(index == currentPageValue.floor() + 1) {
-                  print("floor + 1");
-                  return Transform.scale(
-                      scale: (1 - (index - currentPageValue)) * 0.8,
-                      child: widget.items![index]
-                  );
-                }else{
-                  print('else');
-                  return Transform.scale(
-                      scale: 0.8,
-                      child: widget.items![index]
-                  );
+                double scale = 0;
+                if(index == currentPageValue.floor()){ // pre
+                  print('floor');
+                  scale = 0.9 * (1 - (currentPageValue - index));
+                }else if(index == currentPageValue.floor() + 1){ // current
+                  print('floor + 1');
+                  scale = 0.8 * (index - currentPageValue);
+                }else{ // next
+                  print("else");
+                  scale = 0.8;
                 }
+                print("build $index, scale: $scale");
+                print("-----------------");
+                return Transform.scale(
+                    scale: scale,
+                    child: widget.items![index]
+                );
               },
             )
         ),
