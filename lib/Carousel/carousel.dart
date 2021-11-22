@@ -49,6 +49,25 @@ class _CarouselViewState<T> extends State<CarouselView> {
   late final PageController _pageController = PageController(viewportFraction: widget.viewportFraction);
   double currentPageValue = 0;
 
+
+  /// setSate => get called and update [currentPageValue] position of page scroll
+  /// every time the page was scrolled by pixel by user
+  ///
+  ///
+  /// every time [setSate] get called in [_pageController] when user
+  /// scroll every pixel and the flutter framework rebuild the PageView
+  /// and call the [itemBuilder] function in the PageView Widget
+  ///
+  ///
+  /// [carouselTransitionStyle] call the build function to build the
+  /// widget item, how the position or transition of the widget should be,
+  /// by providing [index] [currentPageValue] of each pixel scroll by user
+  ///
+  ///
+  /// [carouselTransitionStyle.build] function define how the widget
+  /// item should be
+  ///
+
   @override
   void initState() {
     super.initState();
