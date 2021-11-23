@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_carousel/Carousel/Transition/transition.dart';
+
+import 'transition.dart';
 
 class RotateCardTransition extends CarouselTransitionStyle {
 
@@ -31,6 +32,7 @@ class RotateCardTransition extends CarouselTransitionStyle {
 
   @override
   Widget buildWidgetOnTranforming(BuildContext context, int index, double transitingValue) {
+    assert(widgetBuilder == null);
     double rotateDeg = 0;
     double dx = index - transitingValue;
     late Offset offset;
@@ -54,7 +56,7 @@ class RotateCardTransition extends CarouselTransitionStyle {
     return Transform.rotate(
       angle: rotateDeg,
       origin: offset,
-      child: widgetBuilder(context,index),
+      child: widgetBuilder!(context,index),
     );
   }
 }

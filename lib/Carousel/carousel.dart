@@ -78,6 +78,7 @@ class _CarouselViewState<T> extends State<CarouselView> {
   void initState() {
     super.initState();
     _currentSelectedPage = ValueNotifier(widget.initialIndex);
+    widget.carouselTransitionStyle.setItemBuilder(widget.itemBuilder);
     _pageController = PageController(viewportFraction: widget.viewportFraction, initialPage: widget.initialIndex);
     _pageController.addListener(() {
       setState(() {
@@ -98,7 +99,8 @@ class _CarouselViewState<T> extends State<CarouselView> {
 
   @override
   Widget build(BuildContext context) {
-    widget.carouselTransitionStyle.setItemBuilder(widget.itemBuilder);
+    if(widget.carouselTransitionStyle.widgetBuilder == null)
+      widget.carouselTransitionStyle.setItemBuilder(widget.itemBuilder);
     List<Widget> col = [
       SizedBox(
           width: widget.width,

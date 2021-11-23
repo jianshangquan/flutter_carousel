@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 
 
 abstract class CarouselTransitionStyle{
-  late IndexedWidgetBuilder widgetBuilder;
+  IndexedWidgetBuilder? widgetBuilder;
   CarouselTransitionStyle();
   setItemBuilder(IndexedWidgetBuilder widgetBuilder){
     this.widgetBuilder = widgetBuilder;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_carousel/Carousel/Transition/transition.dart';
+
+import 'transition.dart';
 
 class CardTransition extends CarouselTransitionStyle{
   CardTransition({
@@ -13,6 +14,7 @@ class CardTransition extends CarouselTransitionStyle{
 
   @override
   Widget buildWidgetOnTranforming(context, index, transitingValue) {
+    assert(widgetBuilder == null);
     double scale = maxScale;
     double dx = index - transitingValue;
     if(dx > 0){
@@ -26,7 +28,7 @@ class CardTransition extends CarouselTransitionStyle{
     // print("index $index, dx: $dx, scale: $scale");
     return Transform.scale(
         scale: scale,
-        child: widgetBuilder(context, index)
+        child: widgetBuilder!(context, index)
     );
   }
 
