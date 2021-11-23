@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_carousel/Carousel/Transition/transition.dart';
+
+import 'transition.dart';
 
 class ThreeDCardTransition extends CarouselTransitionStyle{
 

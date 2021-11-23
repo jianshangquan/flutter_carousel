@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_carousel/Carousel/Transition/transition.dart';
 import 'Dot/dot.dart';
-import 'package:flutter_carousel/Carousel/Dot/dot_option.dart';
+import 'Dot/dot_option.dart';
+import 'Transition/transition.dart';
 
 class CarouselView<T> extends StatefulWidget {
   CarouselView._({
