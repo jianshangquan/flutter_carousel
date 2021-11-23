@@ -14,7 +14,7 @@ class CardTransition extends CarouselTransitionStyle{
 
   @override
   Widget buildWidgetOnTranforming(context, index, transitingValue) {
-    assert(widgetBuilder == null);
+    assert(widgetBuilder != null, "widgetBuilder can't be null, try hot restart to solve this problem");
     double scale = maxScale;
     double dx = index - transitingValue;
     if(dx > 0){

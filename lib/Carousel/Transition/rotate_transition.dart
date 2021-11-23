@@ -32,7 +32,7 @@ class RotateCardTransition extends CarouselTransitionStyle {
 
   @override
   Widget buildWidgetOnTranforming(BuildContext context, int index, double transitingValue) {
-    assert(widgetBuilder == null);
+    assert(widgetBuilder != null, "widgetBuilder can't be null, try hot restart to solve this problem");
     double rotateDeg = 0;
     double dx = index - transitingValue;
     late Offset offset;
